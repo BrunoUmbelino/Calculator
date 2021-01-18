@@ -9,12 +9,96 @@
 }
 
 .calculator-wrap {
- 
+  width: 30em;
 }
 
 .calculator {
   border: solid 1px black;
-  width: 10em;
-  height: 10em;
- 
+}
+
+/* --------------- btns ----------------------- */
+
+.btns {
+  display: grid;
+  grid-template-areas: 
+  "AC AC DIV x"
+  'sev eig nin min'
+  'fou fiv six plu'
+  'one two trh iqua'
+  'zer zer dott iqua'
+  ;
+}
+
+.AC {
+  grid-area: AC;
+}
+
+.\/ {
+  grid-area: DIV;
+}
+
+.\7 {
+  grid-area: sev;
+}
+
+.\8 {
+  grid-area: eig;
+}
+
+.\9 {
+  grid-area: nin;
+}
+
+.x {
+  grid-area: x;
+} 
+
+.\4 {
+  grid-area: fou;
+}
+
+.\5 {
+  grid-area: fiv;
+}
+
+.\6 {
+  grid-area: six;
+}
+
+.\- {
+  grid-area: min;
+}
+
+.\1 {
+  grid-area: one;
+}
+
+.\2 {
+  grid-area: two;
+}
+
+.\3 {
+  grid-area: trh;
+}
+
+.\+ {
+  grid-area: plu;
+}
+
+.\0030 {
+  grid-area: zer;
+}
+
+.\. {
+  grid-area: dott;
+}
+
+.\= {
+  grid-area: iqua;
+}
+
+
+.btn {
+  padding: 20px 25px;
+  border: solid 1px black;
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import Buttons from "./ButtonsComponent";
-import { Container, Row } from 'reactstrap'
+import Btns from "./ButtonsComponent";
+import { Container, Row } from "reactstrap";
 
 export class Main extends React.Component {
   render() {
@@ -8,8 +8,10 @@ export class Main extends React.Component {
       <div className="main">
         <div className="calculator-wrap">
           <div className="calculator">
-            <Container><Row>dysplay</Row>
-            <Row><Buttons /></Row></Container>
+            <Container>
+              <Row>dysplay</Row>
+              <Row> <Btns /> </Row>
+            </Container>
           </div>
         </div>
       </div>
