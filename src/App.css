@@ -1,6 +1,6 @@
 .main {
   font-size: 16px;
-  background-color: ghostwhite;
+  background: linear-gradient(120deg, hsl(203, 92%, 75%), hsl(203, 92%, 55%));
   min-height: 100vh;
   min-width: 100%;
   display: flex;
@@ -8,12 +8,17 @@
   justify-content: center;
 }
 
-.calculator-wrap {
-  width: 30em;
-}
 
 .calculator {
-  border: solid 1px black;
+  border: solid 5px black;
+  border-radius: 10px;
+}
+
+#display {
+  height: 8em;
+  background-color: whitesmoke;
+  width: 100%;
+ 
 }
 
 /* --------------- btns ----------------------- */
@@ -21,84 +26,88 @@
 .btns {
   display: grid;
   grid-template-areas: 
-  "AC AC DIV x"
-  'sev eig nin min'
-  'fou fiv six plu'
-  'one two trh iqua'
-  'zer zer dott iqua'
+  "ac back div x"
+  'sev eig nin subt'
+  'fou fiv six addi'
+  'one two thre equa'
+  'zer zer dec equa'
   ;
 }
 
-.AC {
-  grid-area: AC;
+#clear {
+  grid-area: ac;
 }
 
-.\/ {
-  grid-area: DIV;
+#backspace {
+  grid-area: back;
 }
 
-.\7 {
+#divide {
+  grid-area: div;
+}
+
+#seven {
   grid-area: sev;
 }
 
-.\8 {
+#eight {
   grid-area: eig;
 }
 
-.\9 {
+#nine {
   grid-area: nin;
 }
 
-.x {
+#multiply {
   grid-area: x;
 } 
 
-.\4 {
+#four {
   grid-area: fou;
 }
 
-.\5 {
+#five {
   grid-area: fiv;
 }
 
-.\6 {
+#six {
   grid-area: six;
 }
 
-.\- {
-  grid-area: min;
+#subtract {
+  grid-area: subt;
 }
 
-.\1 {
+#one {
   grid-area: one;
 }
 
-.\2 {
+#two {
   grid-area: two;
 }
 
-.\3 {
-  grid-area: trh;
+#thre {
+  grid-area: thre;
 }
 
-.\+ {
-  grid-area: plu;
+#add {
+  grid-area: addi;
 }
 
-.\0030 {
+#zero {
   grid-area: zer;
 }
 
-.\. {
-  grid-area: dott;
+#decimal {
+  grid-area: dec;
 }
 
-.\= {
-  grid-area: iqua;
+#equals {
+  grid-area: equa;
 }
 
 
 .btn {
-  padding: 20px 25px;
+  padding: 20px 35px;
   border: solid 1px black;
 }
