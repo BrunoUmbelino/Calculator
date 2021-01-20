@@ -3,8 +3,8 @@ import { Button } from "reactstrap";
 
 const BtnValues = [
   { id: "clear", simb: "AC" },
-  {id: 'backspace', simb: 'DEL'},
-  { id: "divide", simb: "/" },
+  { id: "backspace", simb: "DEL" },
+  { id: "divide", simb: "÷" },
   { id: "seven", simb: "7" },
   { id: "eight", simb: "8" },
   { id: "nine", simb: "9" },
@@ -24,14 +24,20 @@ const BtnValues = [
 
 const Btns = (props) => {
   const Btns = BtnValues.map((item) => {
-    var clickBehavior = (id) => {
-      props.handleInput(id);
-    };
+    let clickBehavior;
+
     if (item.id === "clear") {
       clickBehavior = props.clearDisplay;
     } else if (item.id === "equals") {
       clickBehavior = props.calculate;
+    } else if (item.id === "backspace") {
+      clickBehavior = props.backspace;
+    } else if (/[-+÷x]/.exec(item.simb)) {
+      clickBehavior = props.handleOperation
+    } else {
+      clickBehavior = props.handleInput
     }
+
     return (
       <Button key={item.id} id={item.id} onClick={clickBehavior}>
         {item.simb}
