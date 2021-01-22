@@ -35,7 +35,7 @@ const Btns = (props) => {
     } else if (/[-+÷x]/.exec(item.simb)) {
       clickBehavior = props.handleOperation
     } else {
-      clickBehavior = props.handleInput
+      clickBehavior = props.handleNumber
     }
 
     return (

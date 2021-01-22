@@ -6,107 +6,109 @@ export class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentImp: 0,
-      expression: "",
-      operator: "",
-      result: "",
+      disp: "0",
+      prev: "",
+      exp: "",
     };
     this.clearDisplay = this.clearDisplay.bind(this);
-    this.handleInput = this.handleInput.bind(this);
     this.backspace = this.backspace.bind(this);
+    this.handleNumber = this.handleNumber.bind(this);
     this.handleOperation = this.handleOperation.bind(this);
     this.calculate = this.calculate.bind(this);
   }
 
   clearDisplay() {
-    this.setState({ currentImp: 0, expression: "" });
+    this.setState({ disp: `0`, exp: "" });
   }
 
   backspace() {
-    if (this.state.currentImp.length <= 1) {
-      this.setState({ currentImp: "0" });
+    if (this.state.disp.length <= 1) {
+      this.setState({ disp: 0, curr: 0 });
     } else {
       this.setState({
-        currentImp: this.state.currentImp.slice(0, -1),
+        exp: this.state.disp.slice(0, -1),
       });
     }
   }
 
-  handleInput(ev) {
-    let value = ev.target.innerText;
-    const currentImp = this.state.currentImp;
-    if (value === "." && currentImp.includes(".")) return;
-    else if (currentImp === 0) {
-      this.setState({ currentImp: value });
+  handleNumber(ev) {
+    let input = ev.target.innerText;
+    const { disp, exp } = this.state;
+
+    if (disp.length > 15) return;
+
+    if (input === "." && disp.includes(".")) return;
+    else if (input === "0" && disp[0] === "0") return;
+    else if (disp === "0" || /[-+÷x]/g.test(disp)) {
+      this.setState({ disp: input, exp: exp + input });
     } else {
       this.setState({
-        currentImp: this.state.currentImp + value,
-        expression: this.state.currentImp + value,
+        disp: disp + input,
+        exp: exp + input,
       });
     }
-    console.log(this.state.expression);
   }
 
   handleOperation(ev) {
-    if (this.state.currentImp == 0) return;
-    let operator = ev.target.innerText;
-    this.setState({ operator: operator });
+    const { exp, disp } = this.state;
+    let operation = ev.target.innerText;
+
+    if (disp.length > 15) return;
+
+    operation = operation.replace(/[÷]/, "/");
+    operation = operation.replace(/[x]/, "*");
 
     this.setState({
-      expression: this.state.currentImp,
+      exp: exp + operation,
+      disp: operation,
     });
-    this.setState({
-      currentImp: 0,
-    });
-
-    console.log(this.state.expression);
-    this.calculate();
   }
 
   calculate() {
-    let calculation;
-    let prev = parseFloat(this.state.expression);
-    let current = parseFloat(this.state.currentImp);
-    console.log(prev, current);
-    if (isNaN(prev) || isNaN(current)) return;
-    switch (this.state.operator) {
-      case "+":
-        calculation = prev + current;
-        break;
-      case "-":
-        calculation = prev - current;
-        break;
-      case "x":
-        calculation = prev * current;
-        break;
-      case "÷":
-        calculation = prev / current;
-        break;
+    const endsWithOperator = /[x+‑/]$/;
+    const {exp} = this.state
+    
+    let expression = exp.replace(/([/*-+]+)(-)+/g, `$1`);
+    expression = expression.replace(/([/*-+])([/*-+])+/g, `$2`);
+    console.log(expression)
+
+    if (!endsWithOperator.test(exp)) {
+      let result = eval(expression).toString();
+      const formattedRes = result.slice(0, 15);
+      this.setState({
+        disp: formattedRes,
+        exp: formattedRes,
+      });
     }
-    prev = 0;
-    current = 0;
-    this.setState({ expression: calculation });
-    this.setState({ result: calculation.toString() });
   }
 
   render() {
+    let str = "352+-/+**/*-/25++---10*/1";
+    console.log(eval("5+-5"))
+    console.log(this.state);
+    const LimitError = () => {
+      return <div className="error">"number of characters exceeded"</div>;
+    };
     return (
       <div className="main">
         <Container className="calculator">
           <div>//</div>
           <Row className="screen">
-            <Label id="display">{this.state.expression}</Label>
-            <Label className="expression">{this.state.currentImp}</Label>
+            <Label className="expression">
+              {this.state.disp.length > 15 ? "" : this.state.exp}
+            </Label>
+            <Label id="display">
+              {this.state.disp.length > 15 ? <LimitError /> : this.state.disp}
+            </Label>
           </Row>
           <Row>
-            {" "}
             <Btns
               clearDisplay={this.clearDisplay}
-              handleInput={this.handleInput}
+              handleNumber={this.handleNumber}
               calculate={this.calculate}
               backspace={this.backspace}
               handleOperation={this.handleOperation}
-            />{" "}
+            />
           </Row>
         </Container>
       </div>
