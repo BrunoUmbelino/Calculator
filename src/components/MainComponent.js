@@ -22,24 +22,22 @@ export class Main extends React.Component {
   }
 
   backspace() {
-    if (this.state.disp.length <= 1) {
-      this.setState({ disp: 0, curr: 0 });
-    } else {
-      this.setState({
-        exp: this.state.disp.slice(0, -1),
-      });
-    }
+    this.setState({
+      exp: this.state.disp.slice(0, -1),
+      disp: this.state.disp.slice(0, -1),
+    });
   }
 
   handleNumber(ev) {
+    if (this.state.disp.length > 15) return;
+
     let input = ev.target.innerText;
     const { disp, exp } = this.state;
-
-    if (disp.length > 15) return;
+    const dispWithOperator = /[+/x]/g.test(disp);
 
     if (input === "." && disp.includes(".")) return;
-    else if (input === "0" && disp[0] === "0") return;
-    else if (disp === "0" || /[-+÷x]/g.test(disp)) {
+    else if (input === "0" && disp === "0") return;
+    else if (disp === "0" || dispWithOperator) {
       this.setState({ disp: input, exp: exp + input });
     } else {
       this.setState({
@@ -50,67 +48,90 @@ export class Main extends React.Component {
   }
 
   handleOperation(ev) {
-    const { exp, disp } = this.state;
-    let operation = ev.target.innerText;
+    if (this.state.disp.length > 15) return;
 
-    if (disp.length > 15) return;
+    let { exp } = this.state;
+    let prevOpe = exp[exp.length - 1];
+    let operator = ev.target.innerText;
+    operator = operator.replace(/[÷]/, "/");
+    operator = operator.replace(/[x]/, "*");
 
-    operation = operation.replace(/[÷]/, "/");
-    operation = operation.replace(/[x]/, "*");
-
-    this.setState({
-      exp: exp + operation,
-      disp: operation,
-    });
-  }
-
-  calculate() {
-    const endsWithOperator = /[x+‑/]$/;
-    const {exp} = this.state
-    
-    let expression = exp.replace(/([/*-+]+)(-)+/g, `$1`);
-    expression = expression.replace(/([/*-+])([/*-+])+/g, `$2`);
-    console.log(expression)
-
-    if (!endsWithOperator.test(exp)) {
-      let result = eval(expression).toString();
-      const formattedRes = result.slice(0, 15);
+    if (
+      (/[+*/]/g.exec(prevOpe) && operator !== `-`) ||
+      (prevOpe === `-` && operator === "-")
+    ) {
+      operator = "";
+    } /// test 13
+    else if (prevOpe === "-" && operator === "+") {
+      let expClean = (exp = exp.replace(/[-+/*]/g, ""));
       this.setState({
-        disp: formattedRes,
-        exp: formattedRes,
+        exp: expClean + operator,
+        disp: operator,
+        prev: prevOpe,
+      });
+    } else {
+      this.setState({
+        exp: exp + operator,
+        disp: operator,
+        prev: prevOpe,
       });
     }
   }
 
+  calculate() {
+    if (this.state.disp.length > 15) return;
+
+    const { exp } = this.state;
+    const startWitchOperator = /^[/*+-]+/.test(exp);
+    const endsWithOperator = /[x+‑/]+$/.test(exp);
+
+    if (!endsWithOperator && !startWitchOperator) {
+      const result = eval(exp).toString();
+      const formattedRes = result.slice(0, 15);
+
+      this.setState({
+        disp: formattedRes,
+        exp: formattedRes,
+      });
+    } else {
+      alert("Invalid expression");
+      this.clearDisplay();
+    }
+  }
+
   render() {
-    let str = "352+-/+**/*-/25++---10*/1";
-    console.log(eval("5+-5"))
-    console.log(this.state);
     const LimitError = () => {
       return <div className="error">"number of characters exceeded"</div>;
     };
     return (
       <div className="main">
-        <Container className="calculator">
-          <div>//</div>
-          <Row className="screen">
-            <Label className="expression">
-              {this.state.disp.length > 15 ? "" : this.state.exp}
-            </Label>
-            <Label id="display">
-              {this.state.disp.length > 15 ? <LimitError /> : this.state.disp}
-            </Label>
-          </Row>
-          <Row>
-            <Btns
-              clearDisplay={this.clearDisplay}
-              handleNumber={this.handleNumber}
-              calculate={this.calculate}
-              backspace={this.backspace}
-              handleOperation={this.handleOperation}
-            />
-          </Row>
-        </Container>
+        <div>
+          <Container className="calculator">
+            <div>
+              <span>||</span>
+            </div>
+            <Row className="screen">
+              <Label className="expression">
+                {this.state.disp.length > 15 ? "" : this.state.exp}
+              </Label>
+              <Label id="display">
+                {this.state.disp.length > 15 ? <LimitError /> : this.state.disp}
+              </Label>
+            </Row>
+            <Row>
+              <Btns
+                clearDisplay={this.clearDisplay}
+                handleNumber={this.handleNumber}
+                calculate={this.calculate}
+                backspace={this.backspace}
+                handleOperation={this.handleOperation}
+              />
+            </Row>
+          </Container>
+          <div>
+            <span className="by">By Bruno Umbelino</span>
+          </div>
+        </div>
       </div>
     );
   }

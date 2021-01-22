@@ -1,10 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
 * {
   box-sizing: border-box;
 }
 
 .main {
+  font-family: "Audiowide", cursive;
   font-size: 16px;
-  background: linear-gradient(120deg, hsl(203, 92%, 75%), hsl(203, 92%, 55%));
+  background: linear-gradient(120deg, hsl(166, 95%, 51%), hsl(166, 95%, 41%));
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -15,13 +18,14 @@
   border-radius: 10px;
   max-width: 25rem;
   border: black solid 5px;
+  color: white;
+  background-color: #171717;
+  box-shadow: 5px 5px 24px -3px rgba(0, 0, 0, 0.64);
 }
 
 .screen {
   min-height: 9rem;
-  background-color: whitesmoke;
   padding: 1rem;
-  font-size: 1.5em;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -40,19 +44,27 @@
 }
 
 .btn {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   padding: 1rem;
   width: auto;
   border: solid 1px black;
+  background-color: hsl(0, 0%, 21%);
 }
 
 .error {
-  color: red;
+  color: hsl(0, 85%, 50%);
   font-size: 1.5rem;
   text-align: start;
 }
 
+.by {
+  color: black;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-top: 1.2rem;
+}
 
 /* --------------- btns ----------------------- */
 
@@ -70,14 +82,17 @@
 
 #clear {
   grid-area: ac;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #backspace {
   grid-area: back;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #divide {
   grid-area: div;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #seven {
@@ -94,6 +109,7 @@
 
 #multiply {
   grid-area: mult;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #four {
@@ -110,6 +126,7 @@
 
 #subtract {
   grid-area: subt;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #one {
@@ -126,6 +143,7 @@
 
 #add {
   grid-area: addi;
+  background-color: hsl(0, 0%, 17%);
 }
 
 #zero {
@@ -138,4 +156,5 @@
 
 #equals {
   grid-area: equa;
+  background-color: #ffc309;
 }
