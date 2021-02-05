@@ -16,7 +16,7 @@
 
 .calculator {
   border-radius: 10px;
-  max-width: 25rem;
+  max-width: 20rem;
   border: black solid 5px;
   color: white;
   background-color: #171717;
@@ -50,6 +50,16 @@
   width: auto;
   border: solid 1px black;
   background-color: hsl(0, 0%, 21%);
+  color: white;
+}
+
+.btn:hover {
+  color: white;
+  background-color: hsl(0, 0%, 11%);
+}
+
+.btn:focus {
+  box-shadow: none;
 }
 
 .error {
@@ -64,6 +74,7 @@
   width: 100%;
   text-align: center;
   padding-top: 1.2rem;
+  letter-spacing: 1px;
 }
 
 /* --------------- btns ----------------------- */
@@ -82,17 +93,32 @@
 
 #clear {
   grid-area: ac;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#clear:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #backspace {
   grid-area: back;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#backspace:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #divide {
   grid-area: div;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#divide:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #seven {
@@ -109,7 +135,12 @@
 
 #multiply {
   grid-area: mult;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#multiply:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #four {
@@ -126,7 +157,12 @@
 
 #subtract {
   grid-area: subt;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#subtract:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #one {
@@ -143,7 +179,12 @@
 
 #add {
   grid-area: addi;
-  background-color: hsl(0, 0%, 17%);
+  background-color: hsl(0, 0%, 16%);
+}
+
+#add:hover {
+  background-color: hsl(0, 0%, 6%);
+  color: white;
 }
 
 #zero {
@@ -157,4 +198,8 @@
 #equals {
   grid-area: equa;
   background-color: #ffc309;
+}
+
+#equals:hover {
+  color: black;
 }

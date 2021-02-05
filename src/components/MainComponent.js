@@ -61,7 +61,7 @@ export class Main extends React.Component {
       (prevOpe === `-` && operator === "-")
     ) {
       operator = "";
-    } /// test 13
+    } 
     else if (prevOpe === "-" && operator === "+") {
       let expClean = (exp = exp.replace(/[-+/*]/g, ""));
       this.setState({

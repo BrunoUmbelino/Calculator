@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "reactstrap";
 
 const BtnValues = [
   { id: "clear", simb: "AC" },
@@ -39,9 +38,9 @@ const Btns = (props) => {
     }
 
     return (
-      <Button key={item.id} id={item.id} onClick={clickBehavior}>
+      <button key={item.id} id={item.id} onClick={clickBehavior} className='btn'>
         {item.simb}
-      </Button>
+      </button>
     );
   });
   return <div className="btns">{Btns}</div>;
