@@ -28,16 +28,19 @@ export class Main extends React.Component {
     });
   }
 
-  handleNumber(ev) {
-    if (this.state.disp.length > 15) return;
-
-    let input = ev.target.innerText;
+  handleNumber(e) {
+    let input = e.target.innerText;
     const { disp, exp } = this.state;
-    const dispWithOperator = /[+/x]/g.test(disp);
 
-    if (input === "." && disp.includes(".")) return;
-    else if (input === "0" && disp === "0") return;
-    else if (disp === "0" || dispWithOperator) {
+    const exceededLimitCharacters = this.state.disp.length > 15;
+    const MoreThanOnePointInExpression = input === "." && disp.includes(".");
+    const MoreThanOneInitialZeroInExpression = input === "0" && disp === "0";
+
+    if (exceededLimitCharacters) return;
+
+    if (MoreThanOnePointInExpression) return;
+    else if (MoreThanOneInitialZeroInExpression) return;
+    else if (disp === "0") {
       this.setState({ disp: input, exp: exp + input });
     } else {
       this.setState({
@@ -47,48 +50,37 @@ export class Main extends React.Component {
     }
   }
 
-  handleOperation(ev) {
-    if (this.state.disp.length > 15) return;
-
+  handleOperation(e) {
     let { exp } = this.state;
-    let prevOpe = exp[exp.length - 1];
-    let operator = ev.target.innerText;
+    let operator = e.target.innerText;
+
     operator = operator.replace(/[÷]/, "/");
     operator = operator.replace(/[x]/, "*");
 
-    if (
-      (/[+*/]/g.exec(prevOpe) && operator !== `-`) ||
-      (prevOpe === `-` && operator === "-")
-    ) {
-      operator = "";
-    } 
-    else if (prevOpe === "-" && operator === "+") {
-      let expClean = (exp = exp.replace(/[-+/*]/g, ""));
-      this.setState({
-        exp: expClean + operator,
-        disp: operator,
-        prev: prevOpe,
-      });
-    } else {
-      this.setState({
-        exp: exp + operator,
-        disp: operator,
-        prev: prevOpe,
-      });
-    }
+    const exceededLimitCharacters = this.state.disp.length > 15;
+
+    if (exceededLimitCharacters) return;
+
+    this.setState({
+      exp: exp + operator,
+      disp: operator,
+    });
   }
 
   calculate() {
-    if (this.state.disp.length > 15) return;
-
-    const { exp } = this.state;
+    let { exp } = this.state;
     const startWitchOperator = /^[/*+-]+/.test(exp);
     const endsWithOperator = /[x+‑/]+$/.test(exp);
+    const exceededLimitCharacters = this.state.disp.length > 15;
+
+    // If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign)
+    exp = exp.replace(/([-+/*]+)([+/*])/g, "$2");
+
+    if (exceededLimitCharacters) return;
 
     if (!endsWithOperator && !startWitchOperator) {
       const result = eval(exp).toString();
       const formattedRes = result.slice(0, 15);
-
       this.setState({
         disp: formattedRes,
         exp: formattedRes,
@@ -100,6 +92,7 @@ export class Main extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const LimitError = () => {
       return <div className="error">"number of characters exceeded"</div>;
     };
